@@ -1,11 +1,7 @@
-django-xadmin |Build Status| |Build Status2|
+django-xadmin
 ============================================
 
-.. |Build Status| image:: https://travis-ci.org/sshwsfc/django-xadmin.png?branch=master
-   :target: https://travis-ci.org/sshwsfc/django-xadmin
-
-.. |Build Status2| image:: https://drone.io/github.com/sshwsfc/django-xadmin/status.png
-   :target: https://drone.io/github.com/sshwsfc/django-xadmin/latest
+This repository is a fork from https://github.com/sshwsfc/django-xadmin, adding Django 1.8 compatibility. It is tested under Python 2.7 and Django 1.8. 
 
 Drop-in replacement of Django admin comes with lots of goodies, fully extensible with plugin support, pretty UI based on Twitter Bootstrap.
 
