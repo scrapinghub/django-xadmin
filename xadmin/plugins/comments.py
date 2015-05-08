@@ -4,10 +4,10 @@ from xadmin.layout import *
 from xadmin.util import username_field
 
 from django.conf import settings
-from django.contrib.comments.models import Comment
+from django_comments.models import Comment
 from django.utils.translation import ugettext_lazy as _, ungettext
-from django.contrib.comments import get_model
-from django.contrib.comments.views.moderation import perform_flag, perform_approve, perform_delete
+from django_comments import get_model
+from django_comments.views.moderation import perform_flag, perform_approve, perform_delete
 
 class UsernameSearch(object):
     """The User object may not be auth.User, so we need to provide

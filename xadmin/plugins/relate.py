@@ -4,7 +4,7 @@ from django.utils.encoding import force_unicode
 from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
 from django.db.models.sql.query import LOOKUP_SEP
-from django.db.models.related import RelatedObject
+from django.db.models.fields.related import ForeignObjectRel as RelatedObject
 from django.utils.translation import ugettext as _
 from django.db import models
 
@@ -43,7 +43,7 @@ class RelateMenuPlugin(BaseAdminPlugin):
         links = []
         for r, view_perm, add_perm in self.get_related_list():
             label = r.opts.app_label
-            model_name = r.opts.module_name
+            model_name = r.opts.model_name
             f = r.field
             rel_name = f.rel.get_related_field().name
 

@@ -133,11 +133,11 @@ class BaseAdminObject(object):
     def get_model_url(self, model, name, *args, **kwargs):
         return reverse(
             '%s:%s_%s_%s' % (self.admin_site.app_name, model._meta.app_label,
-                             model._meta.module_name, name),
+                             model._meta.model_name, name),
             args=args, kwargs=kwargs, current_app=self.admin_site.name)
 
     def get_model_perm(self, model, name):
-        return '%s.%s_%s' % (model._meta.app_label, name, model._meta.module_name)
+        return '%s.%s_%s' % (model._meta.app_label, name, model._meta.model_name)
 
     def has_model_perm(self, model, name, user=None):
         user = user or self.user
@@ -295,7 +295,6 @@ class CommAdminView(BaseAdminView):
     menu_template = 'xadmin/includes/sitemenu_default.html'
 
     site_title = None
-    site_footer = None
     global_models_icon = {}
     default_model_icon = None
     apps_label_title = {}
@@ -403,16 +402,12 @@ class CommAdminView(BaseAdminView):
 
             def filter_item(item):
                 if 'menus' in item:
-                    before_filter_length = len(item['menus'])
                     item['menus'] = [filter_item(
                         i) for i in item['menus'] if check_menu_permission(i)]
-                    after_filter_length = len(item['menus'])
-                    if after_filter_length == 0 and before_filter_length > 0:
-                        return None
                 return item
 
             nav_menu = [filter_item(item) for item in menus if check_menu_permission(item)]
-            nav_menu = filter(lambda x:x, nav_menu)
+            nav_menu = filter(lambda i: bool(i['menus']), nav_menu)
 
             if not settings.DEBUG:
                 self.request.session['nav_menu'] = json.dumps(nav_menu)
@@ -441,7 +436,6 @@ class CommAdminView(BaseAdminView):
             'menu_template': self.menu_template,
             'nav_menu': nav_menu,
             'site_title': self.site_title or _(u'Django Xadmin'),
-            'site_footer': self.site_footer or _(u'my-company.inc 2013'),
             'breadcrumbs': self.get_breadcrumb()
         })
 
@@ -473,8 +467,8 @@ class ModelAdminView(CommAdminView):
     def __init__(self, request, *args, **kwargs):
         self.opts = self.model._meta
         self.app_label = self.model._meta.app_label
-        self.module_name = self.model._meta.module_name
-        self.model_info = (self.app_label, self.module_name)
+        self.model_name = self.model._meta.model_name
+        self.model_info = (self.app_label, self.model_name)
 
         super(ModelAdminView, self).__init__(request, *args, **kwargs)
 
@@ -483,7 +477,7 @@ class ModelAdminView(CommAdminView):
         new_context = {
             "opts": self.opts,
             "app_label": self.app_label,
-            "module_name": self.module_name,
+            "module_name": self.model_name,
             "verbose_name": force_unicode(self.opts.verbose_name),
             'model_icon': self.get_model_icon(self.model),
         }
@@ -526,7 +520,7 @@ class ModelAdminView(CommAdminView):
     def model_admin_url(self, name, *args, **kwargs):
         return reverse(
             "%s:%s_%s_%s" % (self.admin_site.app_name, self.opts.app_label,
-            self.module_name, name), args=args, kwargs=kwargs)
+            self.model_name, name), args=args, kwargs=kwargs)
 
     def get_model_perms(self):
         """
@@ -561,7 +555,7 @@ class ModelAdminView(CommAdminView):
         Returns a QuerySet of all model instances that can be edited by the
         admin site. This is used by changelist_view.
         """
-        return self.model._default_manager.get_query_set()
+        return self.model._default_manager.get_queryset()
 
     def has_view_permission(self, obj=None):
         return ('view' not in self.remove_permissions) and (self.user.has_perm('%s.view_%s' % self.model_info) or \

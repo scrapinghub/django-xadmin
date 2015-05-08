@@ -580,7 +580,7 @@ class InlineRevisionPlugin(BaseAdminPlugin):
         if self.request.method == 'GET' and formset.helper and formset.helper.layout:
             helper = formset.helper
             helper.filter(basestring).wrap(InlineDiffField)
-            fake_admin_class = type(str('%s%sFakeAdmin' % (self.opts.app_label, self.opts.module_name)), (object, ), {'model': self.model})
+            fake_admin_class = type(str('%s%sFakeAdmin' % (self.opts.app_label, self.opts.model_name)), (object, ), {'model': self.model})
             for form in formset.forms:
                 instance = form.instance
                 if instance.pk:
