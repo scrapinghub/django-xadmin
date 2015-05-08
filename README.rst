@@ -1,4 +1,4 @@
-django-xadmin |Build Status| |Build Status2|
+django-xadmin
 ============================================
 
 This repository is a fork from https://github.com/sshwsfc/django-xadmin, adding Django 1.8 compatibility. It is tested under Python 2.7 and Django 1.8. 
