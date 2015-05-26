@@ -142,7 +142,7 @@ class InlineModelAdmin(ModelFormAdminView):
     def get_formset(self, **kwargs):
         """Returns a BaseInlineFormSet class for use in admin add/change views."""
         if self.exclude is None:
-            exclude = []
+            exclude = ['dummy_72642']
         else:
             exclude = list(self.exclude)
         exclude.extend(self.get_readonly_fields())

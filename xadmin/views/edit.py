@@ -155,7 +155,7 @@ class ModelFormAdminView(ModelAdminView):
 		add_view and change_view.
 		"""
 		if self.exclude is None:
-			exclude = []
+			exclude = ['dummy_72642']
 		else:
 			exclude = list(self.exclude)
 		exclude.extend(self.get_readonly_fields())
@@ -172,7 +172,8 @@ class ModelFormAdminView(ModelAdminView):
 			"exclude": exclude,
 			"formfield_callback": self.formfield_for_dbfield,
 		}
-		print defaults
+		print 'defaults' + str(defaults)
+		
 		defaults.update(kwargs)
 		return modelform_factory(self.model, **defaults)
 
