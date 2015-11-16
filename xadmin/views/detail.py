@@ -196,7 +196,7 @@ class DetailAdminView(ModelAdminView):
             exclude.extend(self.form._meta.exclude)
         # if exclude is an empty list we pass None to be consistant with the
         # default on modelform_factory
-        exclude = exclude or None
+        exclude = exclude or []
         defaults = {
             "form": self.form,
             "fields": self.fields and list(self.fields) or None,
