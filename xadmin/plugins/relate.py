@@ -1,5 +1,5 @@
 # coding=UTF-8
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils.encoding import force_unicode
 from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
@@ -51,24 +51,30 @@ class RelateMenuPlugin(BaseAdminPlugin):
             verbose_name = force_unicode(opts.verbose_name)
             lookup_name = '%s__%s__exact' % (f.name, rel_name)
 
-            link = ''.join(('<li class="with_menu_btn">',
+            try:
+                link = ''.join(('<li class="with_menu_btn">',
 
-                            '<a href="%s?%s=%s" title="%s"><i class="icon fa fa-th-list"></i> %s</a>' %
-                          (
-                            reverse('%s:%s_%s_changelist' % (
-                                    self.admin_site.app_name, label, model_name)),
-                            RELATE_PREFIX + lookup_name, str(instance.pk), verbose_name, verbose_name) if view_perm else
-                            '<a><span class="text-muted"><i class="icon fa fa-blank"></i> %s</span></a>' % verbose_name,
+                                '<a href="%s?%s=%s" title="%s"><i class="icon fa fa-th-list"></i> %s</a>' %
+                            (
+                                reverse('%s:%s_%s_changelist' % (
+                                        self.admin_site.app_name, label, model_name)),
+                                RELATE_PREFIX + lookup_name, str(instance.pk), verbose_name, verbose_name) if view_perm else
+                                '<a><span class="text-muted"><i class="icon fa fa-blank"></i> %s</span></a>' % verbose_name,
 
-                            '<a class="add_link dropdown-menu-btn" href="%s?%s=%s"><i class="icon fa fa-plus pull-right"></i></a>' %
-                          (
-                            reverse('%s:%s_%s_add' % (
-                                    self.admin_site.app_name, label, model_name)),
-                            RELATE_PREFIX + lookup_name, str(
-                instance.pk)) if add_perm else "",
+                                '<a class="add_link dropdown-menu-btn" href="%s?%s=%s"><i class="icon fa fa-plus pull-right"></i></a>' %
+                            (
+                                reverse('%s:%s_%s_add' % (
+                                        self.admin_site.app_name, label, model_name)),
+                                RELATE_PREFIX + lookup_name, str(
+                    instance.pk)) if add_perm else "",
 
-                '</li>'))
-            links.append(link)
+                    '</li>'))
+                links.append(link)
+            except NoReverseMatch:
+                # this code is really ugly :(
+                # with django 1.8 more strict approach on relationships
+                # we have errors generating some reverse links
+                pass
         ul_html = '<ul class="dropdown-menu" role="menu">%s</ul>' % ''.join(
             links)
         return '<div class="dropdown related_menu pull-right"><a title="%s" class="relate_menu dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-list"></i></a>%s</div>' % (_('Related Objects'), ul_html)

@@ -1,5 +1,3 @@
-
-
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
