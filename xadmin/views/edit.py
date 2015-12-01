@@ -172,8 +172,7 @@ class ModelFormAdminView(ModelAdminView):
 			"exclude": exclude,
 			"formfield_callback": self.formfield_for_dbfield,
 		}
-		print 'defaults' + str(defaults)
-		
+
 		defaults.update(kwargs)
 		return modelform_factory(self.model, **defaults)
 
@@ -397,12 +396,12 @@ class CreateAdminView(ModelFormAdminView):
 			'The %(name)s "%(obj)s" was added successfully.') % {'name': force_unicode(self.opts.verbose_name),
 																 'obj': "<a class='alert-link' href='%s'>%s</a>" % (self.model_admin_url('change', self.new_obj._get_pk_val()), force_unicode(self.new_obj))}
 
-		if "_continue" in request.REQUEST:
+		if "_continue" in request.GET:
 			self.message_user(
 				msg + ' ' + _("You may edit it again below."), 'success')
 			return self.model_admin_url('change', self.new_obj._get_pk_val())
 
-		if "_addanother" in request.REQUEST:
+		if "_addanother" in request.GET:
 			self.message_user(msg + ' ' + (_("You may add another %s below.") % force_unicode(self.opts.verbose_name)), 'success')
 			return request.path
 		else:
@@ -411,8 +410,8 @@ class CreateAdminView(ModelFormAdminView):
 			# Figure out where to redirect. If the user has change permission,
 			# redirect to the change-list page for this object. Otherwise,
 			# redirect to the admin index.
-			if "_redirect" in request.REQUEST:
-				return request.REQUEST["_redirect"]
+			if "_redirect" in request.GET:
+				return request.GET["_redirect"]
 			elif self.has_view_permission():
 				return self.model_admin_url('changelist')
 			else:
@@ -474,7 +473,7 @@ class UpdateAdminView(ModelFormAdminView):
 			context, current_app=self.admin_site.name)
 
 	def post(self, request, *args, **kwargs):
-		if "_saveasnew" in self.request.REQUEST:
+		if "_saveasnew" in self.request.GET:
 			return self.get_model_view(CreateAdminView, self.model).post(request)
 		return super(UpdateAdminView, self).post(request, *args, **kwargs)
 
@@ -492,11 +491,11 @@ class UpdateAdminView(ModelFormAdminView):
 
 		msg = _('The %(name)s "%(obj)s" was changed successfully.') % {'name':
 																	   force_unicode(verbose_name), 'obj': force_unicode(obj)}
-		if "_continue" in request.REQUEST:
+		if "_continue" in request.GET:
 			self.message_user(
 				msg + ' ' + _("You may edit it again below."), 'success')
 			return request.path
-		elif "_addanother" in request.REQUEST:
+		elif "_addanother" in request.GET:
 			self.message_user(msg + ' ' + (_("You may add another %s below.")
 							  % force_unicode(verbose_name)), 'success')
 			return self.model_admin_url('add')
@@ -505,8 +504,8 @@ class UpdateAdminView(ModelFormAdminView):
 			# Figure out where to redirect. If the user has change permission,
 			# redirect to the change-list page for this object. Otherwise,
 			# redirect to the admin index.
-			if "_redirect" in request.REQUEST:
-				return request.REQUEST["_redirect"]
+			if "_redirect" in request.GET:
+				return request.GET["_redirect"]
 			elif self.has_view_permission():
 				change_list_url = self.model_admin_url('changelist')
 				if 'LIST_QUERY' in self.request.session \

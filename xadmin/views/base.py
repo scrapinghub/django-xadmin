@@ -3,6 +3,7 @@ import copy
 import functools
 import datetime
 import decimal
+from collections import OrderedDict
 from functools import update_wrapper
 from inspect import getargspec
 
@@ -16,7 +17,6 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.template import Context, Template
 from django.template.response import TemplateResponse
-from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator, classonlymethod
 from django.utils.encoding import smart_unicode
 from django.utils.http import urlencode
@@ -316,7 +316,7 @@ class CommAdminView(BaseAdminView):
                     get_url(m, had_urls)
         get_url({'menus': site_menu}, had_urls)
 
-        nav_menu = SortedDict()
+        nav_menu = OrderedDict()
 
         for model, model_admin in self.admin_site._registry.items():
             if getattr(model_admin, 'hidden_menu', False):
