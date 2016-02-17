@@ -1,3 +1,14 @@
+*0.6.5*
+-----
+
+- 2016-02-17 (amleczko) Make sure navigation is not stored in session
+
+
+*0.6.4*
+-----
+
+- 2016-01-01 (crawlera_team) A lot of bug fixes for django 1.8 compatibility
+
 
 *0.5.0*
 ---
