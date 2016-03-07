@@ -1,7 +1,3 @@
-*0.6.6.*
------
-Remove menu sorting
-
 *0.6.5*
 -----
 
@@ -16,7 +12,7 @@ Remove menu sorting
 
 *0.5.0*
 ---
-
+    
 - 2014-05-05 (sshwsfc) Update pump to version 0.5.0 -> [view commit](https://github.com/sshwsfc/django-xadmin/commit/edcfde154d35d8aca9cd50486d940f68b0d62adc)
 - 2014-05-05 (sshwsfc) Fixed #120 change "datas" to "data". -> [view commit](https://github.com/sshwsfc/django-xadmin/commit/8b9512448be5868c78672b9ef934a7cd049de552)
 - 2014-04-30 (paul) add support for url name in qbutton: if the string is a name of url, use reverse(url) else, use the url -> [view commit](https://github.com/sshwsfc/django-xadmin/commit/0ceccb87deea5dcb14af8ffbab56dbad95d65d44)
