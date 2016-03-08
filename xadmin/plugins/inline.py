@@ -1,9 +1,10 @@
 import copy
 import inspect
 from django import forms
+from django.contrib.contenttypes.forms import generic_inlineformset_factory, \
+    BaseGenericInlineFormSet
 from django.forms.formsets import all_valid, DELETION_FIELD_NAME
 from django.forms.models import inlineformset_factory, BaseInlineFormSet
-from django.contrib.contenttypes.generic import BaseGenericInlineFormSet, generic_inlineformset_factory
 from django.contrib.auth import get_permission_codename
 from django.template import loader
 from django.template.loader import render_to_string
