@@ -78,7 +78,7 @@
 
             $('#' + options.prefix + '-add-row').click(function() {
                 var formCount = parseInt($('#id_' + options.prefix + '-TOTAL_FORMS').val()),
-                    row = options.formTemplate.clone(true).removeClass('empty-form');
+                    row = options.formTemplate.clone(true).removeClass('empty-form hidden');
                 updateRowIndex(row, formCount);
                 row.appendTo($$);
                 insertDeleteLink(row);
