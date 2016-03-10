@@ -291,17 +291,17 @@ class AdminSite(object):
 			return update_wrapper(wrapper, view)
 
 		# Admin-site-wide views.
-		urlpatterns = patterns('',
-							   url(r'^jsi18n/$', wrap(self.i18n_javascript,
-													  cacheable=True), name='jsi18n')
-							   )
+		urlpatterns = [
+			url(r'^jsi18n/$', wrap(self.i18n_javascript,
+								   cacheable=True), name='jsi18n')
+		]
 
 		# Registed admin views
-		urlpatterns += patterns('',
-								*[url(
-								  path, wrap(self.create_admin_view(clz_or_func)) if type(clz_or_func) == type and issubclass(clz_or_func, BaseAdminView) else include(clz_or_func(self)),
-								  name=name) for path, clz_or_func, name in self._registry_views]
-								)
+		urlpatterns += [
+			url(
+			  path, wrap(self.create_admin_view(clz_or_func)) if type(clz_or_func) == type and issubclass(clz_or_func, BaseAdminView) else include(clz_or_func(self)),
+			  name=name) for path, clz_or_func, name in self._registry_views
+		]
 
 		# Add in each model's views.
 		for model, admin_class in self._registry.iteritems():
@@ -310,12 +310,12 @@ class AdminSite(object):
 					self.create_model_admin_view(clz, model, admin_class)),
 				name=name % (model._meta.app_label, model._meta.model_name))
 				for path, clz, name in self._registry_modelviews]
-			urlpatterns += patterns('',
-									url(
-									r'^%s/%s/' % (
-										model._meta.app_label, model._meta.model_name),
-									include(patterns('', *view_urls)))
-									)
+			urlpatterns += [
+				url(
+				r'^%s/%s/' % (
+					model._meta.app_label, model._meta.model_name),
+				include(view_urls))
+			]
 
 		return urlpatterns
 

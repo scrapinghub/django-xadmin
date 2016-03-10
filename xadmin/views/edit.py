@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.db import models, transaction
 from django.forms.models import modelform_factory
+from django.forms.utils import ErrorList
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_unicode
@@ -318,7 +319,7 @@ class ModelFormAdminView(ModelAdminView):
 
 	@filter_hook
 	def get_error_list(self):
-		errors = forms.util.ErrorList()
+		errors = ErrorList()
 		if self.form_obj.is_bound:
 			errors.extend(self.form_obj.errors.values())
 		return errors
