@@ -1,20 +1,22 @@
-*0.6.6*
- - 2016-03-09 Hotfix for inline models with FK relations (oleg)
+*0.6.7*
+-------
+ - Hotfix for inline models with FK relations (oleg)
+ - Fix deprecation warnings (not available on next django 1.9) (eduardo)
 
 *0.6.5*
------
+-------
 
 - 2016-02-17 (amleczko) Make sure navigation is not stored in session
 
 
 *0.6.4*
------
+-------
 
 - 2016-01-01 (crawlera_team) A lot of bug fixes for django 1.8 compatibility
 
 
 *0.5.0*
----
+-------
 
 - 2014-05-05 (sshwsfc) Update pump to version 0.5.0 -> [view commit](https://github.com/sshwsfc/django-xadmin/commit/edcfde154d35d8aca9cd50486d940f68b0d62adc)
 - 2014-05-05 (sshwsfc) Fixed #120 change "datas" to "data". -> [view commit](https://github.com/sshwsfc/django-xadmin/commit/8b9512448be5868c78672b9ef934a7cd049de552)
