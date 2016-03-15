@@ -12,7 +12,7 @@
       <a class="panel-toggle" data-toggle="collapse" data-parent="#{{ formset.css_id }}-{{inline_style}}" href="#{{ prefix }}-{{ forloop.counter0 }}-body"><b>{{ formset.opts.verbose_name|title }}:</b>&nbsp;{% if fs.instance.pk %}{{ fs.instance }}{% else %}#<span class="formset-num">{{ forloop.counter }}</span>{% endif %}
       </a>
     </div>
-    <div class="panel-collapse collapse" id="{{ prefix }}-{{ forloop.counter0 }}-body">
+    <div class="panel-collapse {% if not fs.errors %} collapse {% endif %}" id="{{ prefix }}-{{ forloop.counter0 }}-body">
       <div class="panel-body formset-form">
         {% crispy fs formset.formset.helper %}
       </div>
