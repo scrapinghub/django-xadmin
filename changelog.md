@@ -1,3 +1,8 @@
+*0.6.8*
+-------
+
+Improve forms visibility (oleg)
+
 *0.6.7*
 -------
  - Hotfix for inline models with FK relations (oleg)
